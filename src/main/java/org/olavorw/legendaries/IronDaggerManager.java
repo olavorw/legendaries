@@ -28,21 +28,21 @@ public final class IronDaggerManager {
 
     public ItemStack createIronDagger() {
         ConfigurationSection section = plugin.getConfig().getConfigurationSection("iron_dagger");
-        String materialName = section != null ? section.getString("material", "IRON_SWORD") : "IRON_SWORD";
+        String materialName = section != null ? section.getString("material", "ECHO_SHARD") : "ECHO_SHARD";
         Material material = Material.matchMaterial(materialName);
-        if (material == null) material = Material.IRON_SWORD;
+        if (material == null) material = Material.ECHO_SHARD;
 
         ItemStack stack = new ItemStack(material);
         ItemMeta meta = stack.getItemMeta();
 
         String name = section != null ? section.getString("name", "Deathripper Dagger") : "Deathripper Dagger";
-        Component display = Component.text(name).color(NamedTextColor.GOLD).decoration(TextDecoration.BOLD, true);
+        Component display = Component.text(name).color(NamedTextColor.DARK_RED).decoration(TextDecoration.BOLD, true).decoration(TextDecoration.ITALIC, false);
         meta.displayName(display);
 
         List<String> loreLines = section != null ? section.getStringList("lore") : List.of();
         List<Component> loreComponents = new ArrayList<>();
         for (String line : loreLines) {
-            loreComponents.add(Component.text(line).color(NamedTextColor.GRAY));
+            loreComponents.add(Component.text(line).color(NamedTextColor.GRAY).decoration(TextDecoration.ITALIC, false));
         }
         if (!loreComponents.isEmpty()) {
             meta.lore(loreComponents);

@@ -1,7 +1,7 @@
 iron_dagger:
   name: "Deathripper Dagger"
   lore:
-    - "A legendary blade that grows deadlier"
+    - "A resonant shard that amplifies your blows"
     - "with each consecutive strike."
   tiers:
     # Each entry defines how many consecutive hits and the bonus for those hits.
@@ -12,7 +12,7 @@ iron_dagger:
       bonus: 3.0
     - hits: 3
       bonus: 4.5
-  material: "IRON_SWORD"
+  material: "ECHO_SHARD"
   # If true, once past the total number of tier hits, the dagger stays at the last tier bonus.
   # If false, it will repeat the last tier as defined only for its duration and then continue at last tier anyway (same effect here).
   cap_at_last_tier: true

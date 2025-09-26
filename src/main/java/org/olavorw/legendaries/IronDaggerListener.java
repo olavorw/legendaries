@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -80,8 +81,9 @@ public final class IronDaggerListener implements Listener {
         }
 
         double bonus = getBonusForHitIndex(info.count);
+        // Set base damage to 10 and add any applicable bonus
+        event.setDamage(10.0 + Math.max(0, bonus));
         if (bonus > 0) {
-            event.setDamage(event.getDamage() + bonus);
             // Optional feedback via actionbar
             player.sendActionBar(Component.text("Deathripper Dagger +" + format(bonus) + " (" + info.count + ")")
                     .color(NamedTextColor.GOLD));
@@ -120,5 +122,18 @@ public final class IronDaggerListener implements Listener {
             StreakInfo s = e.getValue();
             return s != null && deadId.equals(s.targetId);
         });
+    }
+
+    @EventHandler
+    public void onPrepareItemCraft(PrepareItemCraftEvent event) {
+        ItemStack result = event.getInventory().getResult();
+        if (result == null || result.getType().isAir()) return;
+        for (ItemStack ingredient : event.getInventory().getMatrix()) {
+            if (manager.isIronDagger(ingredient)) {
+                // Prevent using the Deathripper Dagger in any default recipes
+                event.getInventory().setResult(null);
+                break;
+            }
+        }
     }
 }

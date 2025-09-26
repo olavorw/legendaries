@@ -4,7 +4,7 @@ main: org.olavorw.legendaries.Legendaries
 api-version: '1.21'
 commands:
   irondagger:
-    description: Give yourself or another player the Deathripper Dagger legendary item.
+    description: Give yourself or another player the Deathripper Dagger item.
     usage: /irondagger [player]
     permission: legendaries.irondagger
 permissions:

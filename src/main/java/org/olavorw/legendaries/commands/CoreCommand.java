@@ -18,11 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class IronDaggerCommand implements CommandExecutor, TabCompleter {
+public class CoreCommand implements CommandExecutor, TabCompleter {
     private final Legendaries plugin;
     private final IronDaggerManager manager;
 
-    public IronDaggerCommand(Legendaries plugin, IronDaggerManager manager) {
+    public CoreCommand(Legendaries plugin, IronDaggerManager manager) {
         this.plugin = plugin;
         this.manager = manager;
     }
@@ -49,11 +49,24 @@ public class IronDaggerCommand implements CommandExecutor, TabCompleter {
             target = p;
         }
 
-        ItemStack dagger = manager.createIronDagger();
-        target.getInventory().addItem(dagger);
-        target.sendMessage(Component.text("You received a Legendary Echo Shard!").color(NamedTextColor.GOLD));
+        String name = command.getName().toLowerCase(Locale.ROOT);
+        ItemStack item;
+        String receivedMsg;
+        if (name.equals("coreconsciousness")) {
+            item = manager.createCoreOfConsciousness();
+            receivedMsg = "You received a Core of Consciousness!";
+        } else if (name.equals("coreunconscious")) {
+            item = manager.createCoreOfUnconscious();
+            receivedMsg = "You received a Core of Unconscious!";
+        } else {
+            sender.sendMessage(Component.text("Unknown core command.").color(NamedTextColor.RED));
+            return true;
+        }
+
+        target.getInventory().addItem(item);
+        target.sendMessage(Component.text(receivedMsg).color(NamedTextColor.GOLD));
         if (target != sender) {
-            sender.sendMessage(Component.text("Gave a Legendary Echo Shard to " + target.getName()).color(NamedTextColor.GOLD));
+            sender.sendMessage(Component.text("Gave item to " + target.getName()).color(NamedTextColor.GOLD));
         }
         return true;
     }

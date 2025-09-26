@@ -3,11 +3,32 @@ version: '${version}'
 main: org.olavorw.legendaries.Legendaries
 api-version: '1.21'
 commands:
+  legendaryechoshard:
+    description: Give yourself or another player the Legendary Echo Shard item.
+    usage: /legendaryechoshard [player]
+    permission: legendaries.legendaryechoshard
   irondagger:
-    description: Give yourself or another player the Deathripper Dagger item.
+    description: (Legacy) Give yourself or another player the Legendary Echo Shard item.
     usage: /irondagger [player]
     permission: legendaries.irondagger
+  coreconsciousness:
+    description: Give yourself or another player the Core of Consciousness.
+    usage: /coreconsciousness [player]
+    permission: legendaries.coreconsciousness
+  coreunconscious:
+    description: Give yourself or another player the Core of Unconscious.
+    usage: /coreunconscious [player]
+    permission: legendaries.coreunconscious
 permissions:
+  legendaries.legendaryechoshard:
+    description: Allows use of /legendaryechoshard
+    default: op
   legendaries.irondagger:
     description: Allows use of /irondagger
+    default: op
+  legendaries.coreconsciousness:
+    description: Allows use of /coreconsciousness
+    default: op
+  legendaries.coreunconscious:
+    description: Allows use of /coreunconscious
     default: op

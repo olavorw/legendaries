@@ -32,7 +32,11 @@ public final class IronDaggerListener implements Listener {
     public IronDaggerListener(Legendaries plugin, IronDaggerManager manager) {
         this.plugin = plugin;
         this.manager = manager;
-        ConfigurationSection section = plugin.getConfig().getConfigurationSection("iron_dagger");
+        // Prefer new config section, fall back to legacy one for compatibility
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("legendary_echo_shard");
+        if (section == null) {
+            section = plugin.getConfig().getConfigurationSection("iron_dagger");
+        }
         this.tiers = loadTiers(section);
         this.capAtLastTier = section == null || section.getBoolean("cap_at_last_tier", true);
     }
@@ -85,7 +89,7 @@ public final class IronDaggerListener implements Listener {
         event.setDamage(10.0 + Math.max(0, bonus));
         if (bonus > 0) {
             // Optional feedback via actionbar
-            player.sendActionBar(Component.text("Deathripper Dagger +" + format(bonus) + " (" + info.count + ")")
+            player.sendActionBar(Component.text("Legendary Echo Shard +" + format(bonus) + " (" + info.count + ")")
                     .color(NamedTextColor.GOLD));
         }
     }
@@ -122,6 +126,19 @@ public final class IronDaggerListener implements Listener {
             StreakInfo s = e.getValue();
             return s != null && deadId.equals(s.targetId);
         });
+
+        // Rare drop logic for cores (only for mobs killed by players)
+        if (!(event.getEntity() instanceof Player)) {
+            Player killer = event.getEntity().getKiller();
+            if (killer != null) {
+                double r = java.util.concurrent.ThreadLocalRandom.current().nextDouble();
+                if (r < 0.01) {
+                    event.getDrops().add(manager.createCoreOfConsciousness());
+                } else if (r < 0.02) {
+                    event.getDrops().add(manager.createCoreOfUnconscious());
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -130,7 +147,7 @@ public final class IronDaggerListener implements Listener {
         if (result == null || result.getType().isAir()) return;
         for (ItemStack ingredient : event.getInventory().getMatrix()) {
             if (manager.isIronDagger(ingredient)) {
-                // Prevent using the Deathripper Dagger in any default recipes
+                // Prevent using the Legendary Echo Shard in any default recipes
                 event.getInventory().setResult(null);
                 break;
             }

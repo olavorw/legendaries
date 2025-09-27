@@ -11,6 +11,9 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.olavorw.legendaries.commands.IronDaggerCommand;
 import org.olavorw.legendaries.commands.CoreCommand;
+import org.olavorw.legendaries.commands.EnlightenedEvokerCommand;
+import org.olavorw.legendaries.commands.AbyssalSlimeCommand;
+import org.olavorw.legendaries.boss.BossListener;
 
 public final class Legendaries extends JavaPlugin {
 
@@ -23,6 +26,7 @@ public final class Legendaries extends JavaPlugin {
         this.ironDaggerManager = new IronDaggerManager(this);
         // Register listeners
         Bukkit.getPluginManager().registerEvents(new IronDaggerListener(this, ironDaggerManager), this);
+        Bukkit.getPluginManager().registerEvents(new BossListener(this, ironDaggerManager), this);
 
         // Register crafting recipe for Legendary Echo Shard (Iron Dagger legacy)
         registerLegendaryEchoShardRecipe();
@@ -48,6 +52,16 @@ public final class Legendaries extends JavaPlugin {
         if (getCommand("coreunconscious") != null) {
             getCommand("coreunconscious").setExecutor(coreCmd);
             getCommand("coreunconscious").setTabCompleter(coreCmd);
+        }
+        EnlightenedEvokerCommand bossCmd = new EnlightenedEvokerCommand(this);
+        if (getCommand("enlightenedevoker") != null) {
+            getCommand("enlightenedevoker").setExecutor(bossCmd);
+            getCommand("enlightenedevoker").setTabCompleter(bossCmd);
+        }
+        AbyssalSlimeCommand slimeCmd = new AbyssalSlimeCommand(this);
+        if (getCommand("abyssalslime") != null) {
+            getCommand("abyssalslime").setExecutor(slimeCmd);
+            getCommand("abyssalslime").setTabCompleter(slimeCmd);
         }
     }
 

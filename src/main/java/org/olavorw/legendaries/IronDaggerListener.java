@@ -127,18 +127,6 @@ public final class IronDaggerListener implements Listener {
             return s != null && deadId.equals(s.targetId);
         });
 
-        // Rare drop logic for cores (only for mobs killed by players)
-        if (!(event.getEntity() instanceof Player)) {
-            Player killer = event.getEntity().getKiller();
-            if (killer != null) {
-                double r = java.util.concurrent.ThreadLocalRandom.current().nextDouble();
-                if (r < 0.01) {
-                    event.getDrops().add(manager.createCoreOfConsciousness());
-                } else if (r < 0.02) {
-                    event.getDrops().add(manager.createCoreOfUnconscious());
-                }
-            }
-        }
     }
 
     @EventHandler

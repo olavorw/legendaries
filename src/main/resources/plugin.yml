@@ -19,6 +19,14 @@ commands:
     description: Give yourself or another player the Core of Unconscious.
     usage: /coreunconscious [player]
     permission: legendaries.coreunconscious
+  enlightenedevoker:
+    description: Spawn The Enlightened Evoker boss at your or a target player's location.
+    usage: /enlightenedevoker [player]
+    permission: legendaries.enlightenedevoker
+  abyssalslime:
+    description: Spawn The Abyssal Slime boss at your or a target player's location.
+    usage: /abyssalslime [player]
+    permission: legendaries.abyssalslime
 permissions:
   legendaries.legendaryechoshard:
     description: Allows use of /legendaryechoshard
@@ -31,4 +39,10 @@ permissions:
     default: op
   legendaries.coreunconscious:
     description: Allows use of /coreunconscious
+    default: op
+  legendaries.enlightenedevoker:
+    description: Allows use of /enlightenedevoker
+    default: op
+  legendaries.abyssalslime:
+    description: Allows use of /abyssalslime
     default: op
